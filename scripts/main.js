@@ -13,8 +13,8 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 var App = React.createClass({
   getInitialState: function(){
     return {
-      fishes : {},
-      order : {}
+      fishes: {},
+      order: {}
     }
   },
   addFish: function(fish){
@@ -23,19 +23,28 @@ var App = React.createClass({
     this.state.fishes['fish-' + timestamp] = fish;
     //2.set the new state of the App
     this.setState({
-      fishes : this.state.fishes
+      fishes: this.state.fishes
     });
   },
   loadSamples: function(){
     this.setState({
-      fishes : require('./sample-fishes.js')
+      fishes: require('./sample-fishes.js')
     });
+  },
+  renderFishes: function(key){
+    return (
+      <Fish key={key} index={key} details={this.state.fishes[key]} />
+    )
   },
   render: function(){
     return(
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Good" />
+
+          <ul className="list-of-fishes">
+            {Object.keys(this.state.fishes).map(this.renderFishes)}
+          </ul>
         </div>
 
         <Order />
@@ -45,6 +54,21 @@ var App = React.createClass({
     )
   }
 
+});
+
+/*Fish*/
+var Fish = React.createClass({
+  render: function(){
+    var details = this.props.details
+
+    return (
+      <li className="menu-fish">
+        <img src={details.image} alt={details.name} />
+        <h3 className="fish-name">{details.name} <span>{helpers.formatPrice(details.price)}</span></h3>
+        <p>{details.desc}</p>
+      </li>
+    )
+  }
 });
 
 /*Header*/
