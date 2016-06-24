@@ -11,7 +11,21 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 /*Applictation*/
 var App = React.createClass({
-
+  getInitialState: function(){
+    return {
+      fishes: {},
+      order: {}
+    }
+  },
+  addFish: function(fish){
+    var timestamp = (new Date()).getTime();
+    //1.update the state of the App
+    this.state.fishes['fish-' + timestamp] = fish;
+    //2.set the new state of the App
+    this.setState({
+      fishes: this.state.fishes
+    });
+  },
   render: function(){
     return(
       <div className="catch-of-the-day">
@@ -21,7 +35,7 @@ var App = React.createClass({
 
         <Order />
 
-        <Inventory />
+        <Inventory addFish={this.addFish}/>
       </div>
     )
   }
@@ -64,11 +78,52 @@ var Inventory = React.createClass({
 
   render: function(){
     return(
-      <p>Inventory</p>
+      <div>
+        <h2>Inventory</h2>
+        <AddFishForm {...this.props}/>
+      </div>
     )
   }
 
 });
+
+/*Add fish form*/
+var AddFishForm = React.createClass({
+  createFish: function(event){
+    //1. prevent the form from submitting
+    event.preventDefault();
+    //2.take the data from the form and create a fish object
+    var fish = {
+      name: this.refs.name.value,
+      price: this.refs.price.value,
+      status: this.refs.status.value,
+      desc: this.refs.desc.value,
+      image: this.refs.image.value
+    };
+    //3.add the fish to the App state
+    this.props.addFish(fish);
+    //4.reset the form
+    this.refs.fishForm.reset();
+
+  },
+  render: function(){
+    return(
+      <form className="fish-edit" ref="fishForm" onSubmit={this.createFish}>
+        <input type="text" ref="name" placeholder="Fish Name"/>
+        <input type="text" ref="price" placeholder="Fish Price" />
+        <select ref="status">
+          <option value="available">Fresh!</option>
+          <option value="unavailable">Sold Out!</option>
+        </select>
+        <textarea type="text" ref="desc" placeholder="Desc"></textarea>
+        <input type="text" ref="image" placeholder="URL to Image" />
+        <button type="submit">+ Add Item </button>
+      </form>
+    )
+  }
+
+});
+
 
 /*Store Picker
 This will let us make <StorePicker/>*/
