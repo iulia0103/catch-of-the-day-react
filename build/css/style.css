@@ -5,7 +5,6 @@
           transform: translateX(-120%);
   max-height: 0;
   padding: 0 !important;
-  color: #f00;
 }
 .order-enter.order-enter-active {
   max-height: 60px;
