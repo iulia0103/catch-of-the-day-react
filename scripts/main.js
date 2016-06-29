@@ -16,6 +16,9 @@ var base = Rebase.createClass('https://catch-of-the-day-react-3f746.firebaseio.c
 //Bi-directional data flow
 var Catalyst = require('react-catalyst');
 
+//Animations
+var CssTransitionGroup = require('react-addons-css-transition-group');
+
 /*Applictation*/
 var App = React.createClass({
   mixins : [Catalyst.LinkedStateMixin],
@@ -158,10 +161,19 @@ var Order = React.createClass({
 
     return (
       <li key={key}>
-        {count}lbs
-        {fish.name}
+        <span>
+        <CssTransitionGroup
+        component='span'
+        transitionName='count'
+        transitionEnterTimeout={250}
+        transitionEnterLeave={250}
+        >
+          <span key={count}>{count}</span>
+        </CssTransitionGroup>
+
+          lbs {fish.name} {removeButton}
+        </span>
         <span className="price">{helpers.formatPrice(count * fish.price)}</span>
-        {removeButton}
       </li>)
   },
   render : function() {
@@ -182,13 +194,19 @@ var Order = React.createClass({
     return (
       <div className="order-wrap">
         <h2 className="order-title">Your Order</h2>
-        <ul className="order">
+        <CssTransitionGroup
+        component="ul"
+        className="order"
+        transitionName="order"
+        transitionEnterTimeout={500}
+        transitionEnterLeave={500}
+        >
           {orderIds.map(this.renderOrder)}
           <li className="total">
             <strong>Total:</strong>
             {helpers.formatPrice(total)}
           </li>
-        </ul>
+        </CssTransitionGroup>
       </div>
     )
   }
