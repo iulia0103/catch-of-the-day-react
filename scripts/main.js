@@ -105,6 +105,7 @@ var App = React.createClass({
 
 /*Fish*/
 var Fish = React.createClass({
+
   onButtonClick : function() {
     console.log("Going to add the fish: ", this.props.index);
     var key = this.props.index;
@@ -125,7 +126,13 @@ var Fish = React.createClass({
         <button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button>
       </li>
     )
+  },
+  propTypes: {
+    addToOrder: React.PropTypes.func.isRequired,
+    details: React.PropTypes.object.isRequired,
+    index: React.PropTypes.string,
   }
+
 });
 
 /*Header*/
@@ -144,12 +151,16 @@ var Header = React.createClass({
         <h3 className="tagline"><span>{this.props.tagline}</span></h3>
       </header>
     )
+  },
+  propTypes: {
+    tagline: React.PropTypes.string.isRequired
   }
 
 });
 
 /*Order*/
 var Order = React.createClass({
+
   renderOrder : function(key) {
     var fish = this.props.fishes[key];
     var count = this.props.order[key];
@@ -209,11 +220,18 @@ var Order = React.createClass({
         </CssTransitionGroup>
       </div>
     )
+  },
+  propTypes: {
+    fishes: React.PropTypes.object.isRequired,
+    order: React.PropTypes.object.isRequired,
+    removeFromOrder: React.PropTypes.func.isRequired
   }
+
 });
 
 /*Inventory*/
 var Inventory = React.createClass({
+
   renderInventory: function(key){
     var linkState = this.props.linkState;
     return(
@@ -243,12 +261,20 @@ var Inventory = React.createClass({
         <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
       </div>
     )
+  },
+  propTypes: {
+    addFish: React.PropTypes.func.isRequired,
+    loadSamples: React.PropTypes.func.isRequired,
+    fishes: React.PropTypes.object.isRequired,
+    linkState: React.PropTypes.func.isRequired,
+    removeFish: React.PropTypes.func.isRequired,
   }
 
 });
 
 /*Add fish form*/
 var AddFishForm = React.createClass({
+
   createFish: function(event){
     //1. prevent the form from submitting
     event.preventDefault();
@@ -264,7 +290,6 @@ var AddFishForm = React.createClass({
     this.props.addFish(fish);
     //4.reset the form
     this.refs.fishForm.reset();
-
   },
   render: function(){
     return(
@@ -288,6 +313,7 @@ var AddFishForm = React.createClass({
 /*Store Picker
 This will let us make <StorePicker/>*/
 var StorePicker = React.createClass({
+
   mixins : [History],
   goToStore : function(event){
     event.preventDefault;
