@@ -2,14 +2,16 @@
   Possible Animations:
   enter
   leave
-  appear Must set transitionAppear={true} on animation component 
+  appear Must set transitionAppear={true} on animation component
 */
 
+/* animate the list elements */
 .order-enter
   transition all 0.5s
   transform translateX(-120%)
   max-height 0
   padding 0 !important
+  color red
   &.order-enter-active
     max-height 60px
     padding 2rem 0 !important
@@ -18,22 +20,22 @@
 
 .order-leave
   transition all 0.5s
-  transform translateX(0)
+  transform rotate(0) scale(1)
   &.order-leave-active
     max-height 0
     padding 0
-    transform translateX(120%)
+    transform rotate(2000deg) scale(0)
 
 
+/* animate the {count} from the list elements */
 .count-enter
   transition all 0.25s
   transform translateY(100%)
+  color red
   &.count-enter-active
     opacity 1
     transform translateY(0)
-    
-    
-  
+
 .count-leave
   transition all 0.25s
   left 0
@@ -42,5 +44,3 @@
   position absolute !important
   &.count-leave-active
     transform translateY(-100%)
-    
-  

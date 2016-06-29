@@ -5,6 +5,7 @@
           transform: translateX(-120%);
   max-height: 0;
   padding: 0 !important;
+  color: #f00;
 }
 .order-enter.order-enter-active {
   max-height: 60px;
@@ -16,20 +17,21 @@
 .order-leave {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
+  -webkit-transform: rotate(0) scale(1);
+          transform: rotate(0) scale(1);
 }
 .order-leave.order-leave-active {
   max-height: 0;
   padding: 0;
-  -webkit-transform: translateX(120%);
-          transform: translateX(120%);
+  -webkit-transform: rotate(2000deg) scale(0);
+          transform: rotate(2000deg) scale(0);
 }
 .count-enter {
   -webkit-transition: all 0.25s;
   transition: all 0.25s;
   -webkit-transform: translateY(100%);
           transform: translateY(100%);
+  color: #f00;
 }
 .count-enter.count-enter-active {
   opacity: 1;
